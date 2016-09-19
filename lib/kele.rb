@@ -1,8 +1,10 @@
 require "kele/version"
 require "httparty"
+require "roadmap"
 
 class Kele
   include HTTParty
+  include Roadmap
 
   def initialize(email, password)
     @api_url = "https://www.bloc.io/api/v1"
