@@ -25,5 +25,21 @@ describe Kele, type: :request do
         expect(result).to include("id")
       end
     end
+
+    describe '#get_roadmap' do
+      it 'returns an object with id' do
+        result = kele.get_roadmap(31)
+        expect(result).to be_a Object
+        expect(result).to include("id")
+      end
+    end
+
+    describe '#get_checkpoint' do
+      it 'returns an object with id' do
+        result = kele.get_checkpoint(1606)
+        expect(result).to be_a Object
+        expect(result).to include("id")
+      end
+    end
   end
 end
