@@ -26,6 +26,20 @@ describe Kele, type: :request do
       end
     end
 
+    describe '#get_mentor_id' do
+      it 'returns a number' do
+        result = kele.get_mentor_id
+        expect(result).to be_a(Numeric)
+      end
+    end
+
+    describe '#get_mentor_availability' do
+      it 'returns an object' do
+        result = kele.get_mentor_id
+        expect(result).to be_a Object
+      end
+    end
+
     describe '#get_roadmap' do
       it 'returns an object with id' do
         result = kele.get_roadmap(31)
@@ -39,6 +53,20 @@ describe Kele, type: :request do
         result = kele.get_checkpoint(1606)
         expect(result).to be_a Object
         expect(result).to include("id")
+      end
+    end
+
+    describe '#get_messages' do
+      it 'returns an object with count with page' do
+        result = kele.get_messages(1)
+        expect(result).to be_a Object
+        expect(result).to include("count")
+      end
+
+      it 'returns an object with count without page' do
+        result = kele.get_messages
+        expect(result).to be_a Object
+        expect(result).to include("count")
       end
     end
   end
