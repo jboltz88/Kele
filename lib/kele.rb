@@ -54,6 +54,22 @@ class Kele
     }
     options[:body][:token] = thread if thread
     response = self.class.post("#{@api_url}/messages", options)
-    raise "error" if response.code != 200
+    raise "invalid message" if response.code != 200
   end
+
+  def create_submission(checkpoint_id = nil, assignment_branch = nil, assignment_commit_link = nil, comment = nil)
+    options = {
+      headers: { "authorization" => @auth_token },
+      body: {
+              checkpoint_id: checkpoint_id,
+              enrollment_id: get_me.dig("current_enrollment", "id")
+            }
+    }
+    options[:body][:assignment_branch] = assignment_branch if assignment_branch
+    options[:body][:assignment_commit_link] = assignment_commit_link if assignment_commit_link
+    options[:body][:comment] = comment if comment
+    response = self.class.post("#{@api_url}/checkpoint_submissions", options)
+    raise "invalid submission" if response.code != 200
+  end
+
 end
