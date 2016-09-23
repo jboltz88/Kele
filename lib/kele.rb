@@ -72,4 +72,20 @@ class Kele
     raise "invalid submission" if response.code != 200
   end
 
+  def update_submission(id = nil, checkpoint_id = nil, assignment_branch = nil, assignment_commit_link = nil, comment = nil)
+    options = {
+      headers: { "authorization" => @auth_token },
+      body: {
+              id: id,
+              checkpoint_id: checkpoint_id,
+              enrollment_id: get_me.dig("current_enrollment", "id")
+            }
+    }
+    options[:body][:assignment_branch] = assignment_branch if assignment_branch
+    options[:body][:assignment_commit_link] = assignment_commit_link if assignment_commit_link
+    options[:body][:comment] = comment if comment
+    response = self.class.put("#{@api_url}/checkpoint_submissions/#{id}", options)
+    puts response.body.inspect
+    raise "invalid submission update" if response.code != 200
+  end
 end
